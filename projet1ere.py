@@ -38,16 +38,14 @@ def est_plonge(mot, mot_ref):
             i += 1
     return i == len(mot)
 
-# --- paramètres ---
-HP_DEPART = 50  # Points de vie initiaux pour chaque joueur
-TEMPS_MAX = 15  # Temps maximum pour entrer un mot (en secondes)
-
 dictionnaire = charger_dictionnaire()
 dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]  # On ne garde que les mots de 6 lettres ou plus
 
 # On stocke les PVs des joueurs
-
 joueurs = [50, 50]
+
+# Temps maximum pour entrer un mot (en secondes)
+temps_max = 15
 
 tour = 1
 print("=== Jeu du mot plongé ===")
@@ -59,12 +57,12 @@ while joueurs[0] > 0 and joueurs[1] > 0:
     print("Mot de référence : ", mot_ref)
 
     for i in range(len(joueurs)):
-        print("joueur ", i+1, " : entrez un mot en ", TEMPS_MAX, " secondes :")
+        print("joueur ", i+1, " : entrez un mot en ", temps_max, " secondes :")
         debut = time.time()
         mot_joueur = input("> ").lower().strip()
         temps = time.time() - debut
 
-        if temps > TEMPS_MAX:
+        if temps > temps_max:
             print("Temps dépassé ! -5 HP")
             joueurs[i] -= 5
         elif mot_joueur not in dictionnaire:

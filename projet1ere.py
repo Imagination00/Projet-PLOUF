@@ -45,48 +45,51 @@ TEMPS_MAX = 15  # Temps maximum pour entrer un mot (en secondes)
 dictionnaire = charger_dictionnaire()
 dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]  # On ne garde que les mots de 6 lettres ou plus
 
-# On définit deux joueurs
-joueurs = [
-    {"nom": "Joueur 1", "hp": HP_DEPART},
-    {"nom": "Joueur 2", "hp": HP_DEPART}
-]
+# On stocke les PVs des joeurus
+joueurs = [50, 50]
 
 tour = 1
 print("=== Jeu du mot plongé ===")
 
 # Boucle principale
-while joueurs[0]["hp"] > 0 and joueurs[1]["hp"] > 0:
-    print(f"\n--- Tour {tour} ---")
+while joueurs[0] > 0 and joueurs[1] > 0:
+    print("\n--- Tour ", tour, " ---")
     mot_ref = random.choice(dictionnaire_ref)
-    print(f"Mot de référence : {mot_ref}")
+    print("Mot de référence : ", mot_ref)
 
-    for joueur in joueurs:
-        print(f"{joueur['nom']} : entrez un mot en {TEMPS_MAX} secondes :")
+    for i in range(len(joueurs)):
+        print("joueur ", i+1, " : entrez un mot en ", TEMPS_MAX, " secondes :")
         debut = time.time()
         mot_joueur = input("> ").lower().strip()
         temps = time.time() - debut
 
         if temps > TEMPS_MAX:
             print("Temps dépassé ! -5 HP")
-            joueur["hp"] -= 5
+            joueurs[i] -= 5
         elif mot_joueur not in dictionnaire:
             print("Mot invalide ! -5 HP")
-            joueur["hp"] -= 5
+            joueurs[i] -= 5
         elif not est_plonge(mot_joueur, mot_ref):
             print("Le mot n'est pas plongé ! -5 HP")
-            joueur["hp"] -= 5
+            joueurs[i] -= 5
         else:
-            print(f"Mot accepté ! L'adversaire perd {len(mot_joueur)} HP")
+            print("Mot accepté ! L'adversaire perd ", len(mot_joueur), " HP")
             # L'autre joueur perd des HP
-            adversaire = joueurs[1] if joueur is joueurs[0] else joueurs[0]
-            adversaire["hp"] -= len(mot_joueur)
+            if i == 0:
+                joueurs[1] -= len(mot_joueur) 
+            else:
+                 joueurs[0] -= len(mot_joueur)
 
     print("\nÉtat des joueurs :")
-    for joueur in joueurs:
-        print(f"{joueur['nom']} : {joueur['hp']} HP")
+    for i in range(len(joueurs)):
+        print("joueur ", i, " : ", joueurs[i], " HP")
 
     tour += 1
 
 # Résultat final
-vainqueur = max(joueurs, key=lambda j: j["hp"])
-print(f"\n=== Victoire de {vainqueur['nom']} ! ===")
+if joueurs[0] > joueurs[1]:
+    print("\n=== Victoire du joueur 1 ! ===")
+elif joueurs[0] < joueurs[1]:
+    print("\n=== Victoire du joueur 2 ! ===")
+else:
+    print("\n=== Égalité ! ===")

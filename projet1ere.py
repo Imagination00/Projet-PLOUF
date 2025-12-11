@@ -19,8 +19,8 @@ def est_plonge(mot, mot_ref):
     return i == len(mot)
 
 # --- paramètres ---
-HP_DEPART = 30
-TEMPS_MAX = 10
+HP_DEPART = 50
+TEMPS_MAX = 15
 dictionnaire = charger_dictionnaire()
 dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]
 

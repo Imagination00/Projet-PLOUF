@@ -35,23 +35,23 @@ def mot_plus_long_possible(mot_ref: str, dictionnaire: frozenset, interdits: set
     return max(candidats, key=len)
 
 # --- paramètres du jeu ---
-HP = 50
-temps_max = 15  # secondes pour répondre
+HP_DEPART = 50
+TEMPS_MAX = 15  # secondes pour répondre
 dictionnaire = charger_dictionnaire()
 dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]
 
 joueurs = [
-    {"nom": "Joueur 1", "hp": HP, "mots": set()},
-    {"nom": "Joueur 2", "hp": HP, "mots": set()},
+    {"nom": "Joueur 1", "hp": HP_DEPART, "mots": set()},
+    {"nom": "Joueur 2", "hp": HP_DEPART, "mots": set()},
 ]
 
 # --- fonction de saisie ---
 def demander_mot(joueur: dict, mot_ref: str, interdits: set) -> str:
-    print(f"{joueur['nom']} → mot plongé dans '{mot_ref}' ({temps_max}s) :")
+    print(f"{joueur['nom']} → mot plongé dans '{mot_ref}' ({TEMPS_MAX}s) :")
     start = time.time()
     mot = input("> ").strip()
     duree = time.time() - start
-    if duree > temps_max:
+    if duree > TEMPS_MAX:
         print("Temps dépassé")
         return None
 

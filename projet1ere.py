@@ -45,7 +45,8 @@ TEMPS_MAX = 15  # Temps maximum pour entrer un mot (en secondes)
 dictionnaire = charger_dictionnaire()
 dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]  # On ne garde que les mots de 6 lettres ou plus
 
-# On stocke les PVs des joeurus
+# On stocke les PVs des joueurs
+
 joueurs = [50, 50]
 
 tour = 1

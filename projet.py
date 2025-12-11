@@ -10,7 +10,7 @@ def enlever_accents(mot: str) -> str:
         if unicodedata.category(c) != 'Mn'
     ).lower()
 
-def charger_dictionnaire(fichier="dictionnaire.txt"):
+def charger_dictionnaire(fichier: str = "dictionnaire.txt") -> frozenset:
     if not os.path.exists(fichier):
         print(f"Fichier {fichier} introuvable")
         return frozenset()
@@ -27,7 +27,7 @@ def est_plonge(m: str, M: str) -> bool:
         j += 1
     return i == len(m)
 
-def mot_plus_long_possible(mot_ref, dictionnaire, interdits):
+def mot_plus_long_possible(mot_ref: str, dictionnaire: frozenset, interdits: set) -> str:
     """Renvoie le mot le plus long plongé dans mot_ref et non interdit"""
     candidats = [m for m in dictionnaire if est_plonge(m, mot_ref) and m not in interdits]
     if not candidats:
@@ -46,7 +46,7 @@ joueurs = [
 ]
 
 # --- fonction de saisie ---
-def demander_mot(joueur, mot_ref, interdits):
+def demander_mot(joueur: dict, mot_ref: str, interdits: set) -> str:
     print(f"{joueur['nom']} → mot plongé dans '{mot_ref}' ({temps_max}s) :")
     start = time.time()
     mot = input("> ").strip()

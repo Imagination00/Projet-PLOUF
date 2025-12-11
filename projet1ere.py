@@ -1,8 +1,18 @@
 import random
 import time
 
-# On charge un dictionnaire de mots (un fichier dictionnaire.txt doit être présent)
 def charger_dictionnaire(fichier="dictionnaire.txt"):
+    """
+    Charge un dictionnaire de mots depuis un fichier texte.
+
+    Args:
+        fichier (str): Chemin vers le fichier contenant les mots (un mot par ligne).
+                      Par défaut : "dictionnaire.txt".
+
+    Returns:
+        list: Liste des mots en minuscules, sans espaces ni sauts de ligne.
+              Retourne une liste vide si le fichier est introuvable.
+    """
     try:
         with open(fichier, "r", encoding="utf-8") as f:
             return [mot.strip().lower() for mot in f if mot.strip()]
@@ -10,8 +20,18 @@ def charger_dictionnaire(fichier="dictionnaire.txt"):
         print("Le fichier dictionnaire.txt est introuvable.")
         return []
 
-# Vérifie si le mot joueur est dans l'ordre des lettres du mot de référence
 def est_plonge(mot, mot_ref):
+    """
+    Vérifie si un mot est "plongé" dans un mot de référence.
+    Un mot est plongé si ses lettres apparaissent dans l'ordre (mais pas forcément consécutives) dans le mot de référence.
+
+    Args:
+        mot (str): Mot à tester.
+        mot_ref (str): Mot de référence.
+
+    Returns:
+        bool: True si le mot est plongé, False sinon.
+    """
     i = 0
     for lettre in mot_ref:
         if i < len(mot) and mot[i] == lettre:
@@ -19,10 +39,11 @@ def est_plonge(mot, mot_ref):
     return i == len(mot)
 
 # --- paramètres ---
-HP_DEPART = 50
-TEMPS_MAX = 15
+HP_DEPART = 50  # Points de vie initiaux pour chaque joueur
+TEMPS_MAX = 15  # Temps maximum pour entrer un mot (en secondes)
+
 dictionnaire = charger_dictionnaire()
-dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]
+dictionnaire_ref = [mot for mot in dictionnaire if len(mot) >= 6]  # On ne garde que les mots de 6 lettres ou plus
 
 # On définit deux joueurs
 joueurs = [

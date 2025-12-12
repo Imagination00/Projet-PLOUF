@@ -155,7 +155,13 @@ while all(j["hp"] > 0 for j in joueurs):
     tour += 1
 
 # --- fin du jeu ---
-vainqueur = max(joueurs, key=lambda j: j["hp"])
+hp_max = max(j["hp"] for j in joueurs)
+vainqueurs = [j for j in joueurs if j["hp"] == hp_max]
+
 print("\n" + "="*30)
-print(f"Victoire : {vainqueur['nom']}")
+if len(vainqueurs) > 1:
+    noms = ", ".join(j["nom"] for j in vainqueurs)
+    print(f"Égalité entre : {noms}")
+else:
+    print(f"Victoire : {vainqueurs[0]['nom']}")
 print("="*30)
